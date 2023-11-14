@@ -1,0 +1,89 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://InteractionManager.gd" type="Script" id=1]
+[ext_resource path="res://icon.png" type="Texture" id=2]
+[ext_resource path="res://assets/lockarrows.png" type="Texture" id=3]
+
+[sub_resource type="Shader" id=1]
+code = "shader_type canvas_item;
+uniform float blur: hint_range(0.0,10.0) = .5;
+void fragment(){
+	vec4 color = texture(SCREEN_TEXTURE, SCREEN_UV, blur);
+	COLOR = color;
+}"
+
+[sub_resource type="ShaderMaterial" id=2]
+shader = SubResource( 1 )
+shader_param/blur = 3.134
+
+[sub_resource type="RectangleShape2D" id=3]
+extents = Vector2( 24, 180 )
+
+[sub_resource type="AtlasTexture" id=4]
+atlas = ExtResource( 3 )
+region = Rect2( 0, 0, 7, 8 )
+
+[sub_resource type="SpriteFrames" id=5]
+animations = [ {
+"frames": [ SubResource( 4 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+} ]
+
+[node name="InteractionManager" type="Node2D"]
+script = ExtResource( 1 )
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="CloseButton" type="Button" parent="CanvasLayer"]
+margin_left = 582.0
+margin_top = 11.0
+margin_right = 629.0
+margin_bottom = 31.0
+text = "Close"
+
+[node name="Sprite" type="Sprite" parent="."]
+visible = false
+material = SubResource( 2 )
+position = Vector2( 320, 180 )
+scale = Vector2( 10, 5.625 )
+z_index = 1
+texture = ExtResource( 2 )
+
+[node name="RotateRight" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RotateRight"]
+position = Vector2( 616, 180 )
+shape = SubResource( 3 )
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="RotateRight"]
+position = Vector2( 616, 180 )
+rotation = 1.5708
+scale = Vector2( 4, 4 )
+frames = SubResource( 5 )
+
+[node name="Tween" type="Tween" parent="RotateRight"]
+
+[node name="RotateLeft" type="Area2D" parent="."]
+position = Vector2( -592, 0 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RotateLeft"]
+position = Vector2( 616, 180 )
+shape = SubResource( 3 )
+
+[node name="Tween" type="Tween" parent="RotateLeft"]
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="RotateLeft"]
+position = Vector2( 616, 180 )
+rotation = 4.71239
+scale = Vector2( 4, 4 )
+frames = SubResource( 5 )
+
+[node name="HintManager" type="Node2D" parent="."]
+
+[connection signal="pressed" from="CanvasLayer/CloseButton" to="." method="_on_CloseButton_pressed"]
+[connection signal="mouse_entered" from="RotateRight" to="." method="_on_RotateRight_mouse_entered"]
+[connection signal="mouse_exited" from="RotateRight" to="." method="_on_RotateRight_mouse_exited"]
+[connection signal="mouse_entered" from="RotateLeft" to="." method="_on_RotateLeft_mouse_entered"]
+[connection signal="mouse_exited" from="RotateLeft" to="." method="_on_RotateLeft_mouse_exited"]

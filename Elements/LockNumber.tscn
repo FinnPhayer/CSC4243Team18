@@ -1,0 +1,165 @@
+[gd_scene load_steps=15 format=2]
+
+[ext_resource path="res://assets/locknumbers-Sheet.png" type="Texture" id=1]
+[ext_resource path="res://Elements/LockNumber.gd" type="Script" id=2]
+[ext_resource path="res://assets/lockarrows.png" type="Texture" id=3]
+[ext_resource path="res://assets/locktransition-Sheet.png" type="Texture" id=4]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 6.5, 10 )
+
+[sub_resource type="Animation" id=2]
+length = 0.001
+tracks/0/type = "bezier"
+tracks/0/path = NodePath(".:scale:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"points": PoolRealArray( 1, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0 )
+}
+tracks/1/type = "bezier"
+tracks/1/path = NodePath(".:scale:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"points": PoolRealArray( 1, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0 )
+}
+tracks/2/type = "bezier"
+tracks/2/path = NodePath(".:position:x")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"points": PoolRealArray( 3, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0 )
+}
+tracks/3/type = "bezier"
+tracks/3/path = NodePath(".:position:y")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"points": PoolRealArray( -6, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0 )
+}
+
+[sub_resource type="Animation" id=3]
+resource_name = "arrowbounce"
+length = 1.5
+loop = true
+tracks/0/type = "bezier"
+tracks/0/path = NodePath(".:scale:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"points": PoolRealArray( 1, -0.25, 0, 0.25, 0, 1.25, -0.25, 0, 0.25, 0, 1, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0, 0.7, 1.5 )
+}
+tracks/1/type = "bezier"
+tracks/1/path = NodePath(".:scale:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"points": PoolRealArray( 1, -0.25, 0, 0.25, 0, 1.25, -0.25, 0, 0.25, 0, 1, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0, 0.7, 1.5 )
+}
+tracks/2/type = "bezier"
+tracks/2/path = NodePath(".:position:x")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"points": PoolRealArray( 3, -0.25, 0, 0.25, 0, 2.4, -0.25, 0, 0.25, 0, 3, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0, 0.7, 1.5 )
+}
+tracks/3/type = "bezier"
+tracks/3/path = NodePath(".:position:y")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"points": PoolRealArray( -6, -0.25, 0, 0.25, 0, -9, -0.25, 0, 0.25, 0, -6, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0, 0.7, 1.5 )
+}
+
+[sub_resource type="AtlasTexture" id=11]
+atlas = ExtResource( 4 )
+region = Rect2( 0, 0, 13, 20 )
+
+[sub_resource type="AtlasTexture" id=12]
+atlas = ExtResource( 4 )
+region = Rect2( 13, 0, 13, 20 )
+
+[sub_resource type="AtlasTexture" id=13]
+atlas = ExtResource( 4 )
+region = Rect2( 26, 0, 13, 20 )
+
+[sub_resource type="AtlasTexture" id=14]
+atlas = ExtResource( 4 )
+region = Rect2( 39, 0, 13, 20 )
+
+[sub_resource type="AtlasTexture" id=15]
+atlas = ExtResource( 4 )
+region = Rect2( 52, 0, 13, 20 )
+
+[sub_resource type="AtlasTexture" id=16]
+atlas = ExtResource( 4 )
+region = Rect2( 65, 0, 13, 20 )
+
+[sub_resource type="SpriteFrames" id=10]
+animations = [ {
+"frames": [ SubResource( 11 ), SubResource( 12 ), SubResource( 13 ), SubResource( 14 ), SubResource( 15 ), SubResource( 16 ) ],
+"loop": true,
+"name": "spin",
+"speed": 5.0
+} ]
+
+[node name="LockNumber" type="Node2D"]
+script = ExtResource( 2 )
+
+[node name="Sprite" type="Sprite" parent="."]
+texture = ExtResource( 1 )
+centered = false
+hframes = 9
+frame = 5
+
+[node name="ClickableArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ClickableArea"]
+position = Vector2( 6.5, 10 )
+shape = SubResource( 1 )
+
+[node name="Arrows" type="Sprite" parent="."]
+position = Vector2( 3, -6 )
+texture = ExtResource( 3 )
+centered = false
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+root_node = NodePath("../Arrows")
+anims/RESET = SubResource( 2 )
+anims/arrowbounce = SubResource( 3 )
+
+[node name="TransitionSprite" type="AnimatedSprite" parent="."]
+z_index = 1
+frames = SubResource( 10 )
+animation = "spin"
+speed_scale = 4.0
+centered = false
+
+[connection signal="mouse_entered" from="ClickableArea" to="." method="_on_ClickableArea_mouse_entered"]
+[connection signal="mouse_exited" from="ClickableArea" to="." method="_on_ClickableArea_mouse_exited"]
+[connection signal="animation_finished" from="TransitionSprite" to="." method="_on_TransitionSprite_animation_finished"]
